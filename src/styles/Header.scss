@@ -1,0 +1,59 @@
+@import "./Variables";
+@import "./Mixins";
+
+.header{
+  @include flex-mother($justify-content: space-between, $align-items: center);
+  max-width: 1200px;
+  height: $headerHeight800;
+  .header__logo{
+    margin: 10px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 3rem;
+    svg{
+      height: 100%;
+      margin-right: 10px;
+      color: black;
+    }
+  }
+  .header__cart{
+    margin: 10px 20px;
+    button{
+      position: relative;
+      height: 100%;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      svg{
+        font-size: 2rem;
+      }
+      // .header__cart-amount{
+      //   position: absolute;
+      //   bottom: -8px;
+      //   right: -8px;
+      //   height: 20px;
+      //   line-height: 20px;
+      //   width: 20px;
+      //   border-radius: 50%;
+      //   text-align: center;
+      //   font-size: 11px;
+      //   background-color: $color2;
+      //   color: white;
+      // }
+    }
+  }
+}
+
+@media (min-width: 799px){
+  .header{
+    height:  $headerHeight;
+    margin: auto;
+    padding: 0 15px;
+  }
+}
+
+@media (min-width: 1400px){
+  .header{
+    max-width: none;
+    padding: 0 20px;
+  }
+}

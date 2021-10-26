@@ -1,0 +1,20 @@
+@import "./Mixins";
+@import "./Keyframes";
+@import "./Variables";
+@import "./Header";
+@import "./Products";
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App{
+  overflow-x: hidden;
+}
