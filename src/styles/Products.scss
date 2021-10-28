@@ -15,8 +15,9 @@
     height: 390px;
     margin: 17px 0;
     border-radius: 8px;
+
     .product__item-wrap{
-      @include flex-mother($flex-direction: column, $align-items: center);
+      @include flex-mother($flex-direction: column, $align-items: center, $flex-wrap: wrap);
       position: absolute;
       top: 0;
       left: 0;
@@ -26,22 +27,10 @@
       border-radius: 8px;
       box-shadow: 2px 2px 5px 1px rgba(0,0,0,.1);
       transition: .3s;
-      overflow: hidden;
-      .product__item-new{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100px;
-        height: 20px;
-        line-height: 20px;
-        border-bottom-right-radius: 10px;
-        text-align: center;
-        font-family: 'Rubik', sans-serif;
-        font-size: 15px;
-        background-color: $color2;
-        color: white;
+      // overflow: hidden;
+      &>{
+        flex-grow: 0;
       }
-  
       .product__item-image{
         flex-basis: 140px;
         position: relative;
@@ -58,84 +47,56 @@
       }
   
       .product__item-name{
-        position: relative;
-        display: inline-block;
-        width: 100%;
-        margin: 20px 0 10px 0;
+        display: block;
         font-size: 20px;
         font-weight: 500;
         font-family: 'Rubik', sans-serif;
         color: $color2;
+      }
+
+      .product__item-name-price-wrap{
+        @include flex-mother($align-items: center, $justify-content: space-between);
+        width: 100%;
+        margin: 10px 0;
+      }
+  
+      .product__item-price{
+        display: block;
+        text-align: end;
+        font-size: 15px;
+        font-family: 'Rubik', sans-serif;
+        font-weight: 500;
+        color: $color5;
+      }
+
+      .product__item-desc{
+        position: relative;
+        padding: 5px;
+        border-radius: 5px;
+        font-family: 'Rubik', sans-serif;
+        font-size: .8rem;
+        font-weight: 300;
+        background-color: white;
+        box-shadow: 1px 1px 2px 1px rgba(0,0,0,.1);
+        transition: .3s;
         span{
           position: absolute;
-          top: -8px;
-          left: -8px;
-          min-width: 110%;
-          max-width: 115%;
-          padding: 8px;
-          border-radius: 10px;
+          top: 0;
+          left: 0;
+          padding: 5px;
+          border-radius: 5px;
           background-color: white;
-          box-shadow: 2px 2px 5px 1px rgba(0,0,0,.1);
+          box-shadow: 1px 1px 2px 1px rgba(0,0,0,.1);
           transition: .3s;
           opacity: 0;
           z-index: -99;
         }
         &:hover{
+          box-shadow: none;
           span{
             opacity: 1;
             z-index: 99;
           }
-        }
-      }
-  
-      .product__item-type, .product__item-sensor{
-        @include flex-mother($justify-content: space-between);
-        width: 100%;
-        margin-bottom: 5px;
-        span{
-          display: block;
-          font-size: 11px;
-          line-height: 12px;
-          font-weight: 900;
-          color: $color1;
-          &+span{
-            font-weight: normal;
-          }
-        }
-      }
-  
-      .product__item-sensor{
-        margin-bottom: 10px;
-      }
-  
-      .product__item-old-price{
-        align-self: flex-end;
-        display: inline-block;
-        height: 18px;
-        line-height: 18px;
-        font-size: 15px;
-        font-family: 'Rubik', sans-serif;
-        font-weight: 500;
-        text-decoration: line-through;
-        color: $color5;
-      }
-  
-      .product__item-normal-price{
-        align-self: flex-end;
-        line-height: 24px;
-        font-size: 20px;
-        font-family: 'Rubik', sans-serif;
-        font-weight: 500;
-        color: $color2;
-      }
-  
-      .product__item-free-delivery{
-        margin-top: 10px;
-        font-size: 11px;
-        color: $color3;
-        svg{
-          font-size: 14px;
-          margin: 0 5px;
         }
       }
   
@@ -157,6 +118,7 @@
         color: white;
         transition: .3s;
         cursor: pointer;
+        z-index: -99;
         span{
           position: relative;
           display: inline-block;
@@ -203,21 +165,22 @@
   .product__item{
     height: 340px;
     margin: 17px 25px;
-    &:hover{
-      .product__item-wrap{
+    .product__item-wrap{
+      &:hover{
         .product__item-add-cart{
           opacity: 1;
         }
       }
     }
     .product__item-wrap{
-      height: 340px;
+      height: 300px;
       &:hover{
-        height: 360px;
+        height: 340px;
       }
       .product__item-add-cart{
-        top: calc(340px - 40px);
+        top: calc(330px - 40px);
         opacity: 0;
+        z-index: 9;
       }
     }
   }

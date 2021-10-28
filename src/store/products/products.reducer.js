@@ -2,8 +2,8 @@ import actionNames from '../action.names';
 
 const products = (state = [], action) => {
   switch (action.type) {
-    // case actionNames.ADD_TO_CART:
-    //   return [...state];
+    case actionNames.SET_PRODUCTS:
+      return action.payload.products
 
     default:
       return state;
