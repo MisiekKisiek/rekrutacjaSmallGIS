@@ -3,6 +3,7 @@
 @import "./Variables";
 @import "./Header";
 @import "./Products";
+@import "./Cart";
 
 *{
   margin: 0;
@@ -13,8 +14,20 @@
 html{
   font-size: 16px;
   font-family: Arial, Helvetica, sans-serif;
+  // overflow: hidden;
 }
 
 .App{
+  position: relative;
   overflow-x: hidden;
+}
+
+.App__unvisible{
+  position: fixed;
+  // overflow: hidden;
+}
+
+[aria-hidden="true"] {    
+  width: 100vw;
+  z-index: -1; 
 }

@@ -1,0 +1,17 @@
+@keyframes curtineLoad{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: .1;
+  }
+}
+
+@keyframes bagLoad{
+  0%{
+    right: -530px;
+  }
+  100%{
+    right: 0;
+  }
+}

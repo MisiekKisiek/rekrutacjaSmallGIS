@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 //Redux
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cart/cart.action'
+import cartVisibility from '../store/cartVisibility/cartVisibility.reducer';
 
 const ProductItem = ({ data }) => {
+
+  const [descVisible, setdescVisible] = useState(false);
 
   const dispatch = useDispatch();
 
   const { id, description, img, name, price } = data;
 
-  const shortDescription = description.slice(0,100).concat("...");
+  const shortDescription = description.slice(0, 80).concat("...");
 
 
   return (<li className="product__item">
@@ -27,12 +32,20 @@ const ProductItem = ({ data }) => {
         </span>
       </div>
       <div className="product__item-desc">
-        {shortDescription}
-        <span>{description}</span>
+        <button onClick={() => { setdescVisible(prevState => !prevState) }}>
+          <FontAwesomeIcon icon={descVisible ? faSortUp : faSortDown} />
+        </button>
+        {
+          descVisible ? (
+            <span>{description}</span>
+          ) : (
+            <span>{shortDescription}</span>
+          )
+        }
       </div>
-      <button 
+      <button
         className="product__item-add-cart"
-        onClick={()=>{ dispatch(addToCart(id)) }}
+        onClick={() => { dispatch(addToCart(id)) }}
       >
         <span></span>
         dodaj do koszyka

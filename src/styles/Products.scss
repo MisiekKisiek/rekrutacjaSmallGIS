@@ -12,7 +12,7 @@
 .product__item{
     position: relative;
     width: 250px;
-    height: 390px;
+    height: 360px;
     margin: 17px 0;
     border-radius: 8px;
 
@@ -22,7 +22,7 @@
       top: 0;
       left: 0;
       width: 250px;
-      height: 390px;
+      height: 360px;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 2px 2px 5px 1px rgba(0,0,0,.1);
@@ -71,39 +71,47 @@
 
       .product__item-desc{
         position: relative;
+        width: 100%;
         padding: 5px;
         border-radius: 5px;
         font-family: 'Rubik', sans-serif;
         font-size: .8rem;
         font-weight: 300;
+        word-break: break-all;
         background-color: white;
-        box-shadow: 1px 1px 2px 1px rgba(0,0,0,.1);
+        
         transition: .3s;
+        button{
+          position: absolute;
+          top: 5px;
+          right: 0;
+          width: 15px;
+          border: none;
+          font-size: 1rem;
+          background-color: transparent;
+          color: $color5;
+          z-index: 11;
+          cursor: pointer;
+        }
         span{
           position: absolute;
           top: 0;
           left: 0;
-          padding: 5px;
+          min-height: 80px;
+          width: 100%;
+          padding: 5px 15px 5px 5px;
           border-radius: 5px;
           background-color: white;
           box-shadow: 1px 1px 2px 1px rgba(0,0,0,.1);
           transition: .3s;
-          opacity: 0;
-          z-index: -99;
-        }
-        &:hover{
-          box-shadow: none;
-          span{
-            opacity: 1;
-            z-index: 99;
-          }
+          z-index: 10;
         }
       }
   
       .product__item-add-cart{
         @include flex-mother($justify-content: center, $align-items: center);
         position: absolute;
-        top: calc(370px - 40px);
+        top: calc(100% - 60px);
         left: 20px;
         height: 40px;
         line-height: 18px;
@@ -118,7 +126,7 @@
         color: white;
         transition: .3s;
         cursor: pointer;
-        z-index: -99;
+        z-index: 8;
         span{
           position: relative;
           display: inline-block;
@@ -166,21 +174,24 @@
     height: 340px;
     margin: 17px 25px;
     .product__item-wrap{
+      .product__item-add-cart{
+        z-index: -99;
+      }
       &:hover{
         .product__item-add-cart{
           opacity: 1;
+          z-index: 9;
         }
       }
     }
     .product__item-wrap{
-      height: 300px;
+      height: 310px;
       &:hover{
-        height: 340px;
+        height: 350px;
       }
       .product__item-add-cart{
-        top: calc(330px - 40px);
+        top: calc(100% - 55px);
         opacity: 0;
-        z-index: 9;
       }
     }
   }

@@ -6,3 +6,18 @@ export const addToCart = (id) => ({
     id,
   },
 });
+
+export const changeCartItemAmount = (id, amount) => ({
+  type: "CHANGE_CART_ITEM_AMOUNT",
+  payload: {
+    id,
+    amount,
+  }
+});
+
+export const removeFromCart = (id) => ({
+  type: "REMOVE_FROM_CART",
+  payload: {
+    id,
+  }
+})
