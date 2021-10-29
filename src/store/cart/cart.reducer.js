@@ -21,15 +21,17 @@ const cart = (state = [], action) => {
         ]
       }
 
-    case "CHANGE_CART_ITEM_AMOUNT":
+    case actionNames.CHANGE_CART_ITEM_AMOUNT:
       const itemIndex = [...state].findIndex(product => action.payload.id === product.id);
       const item = { id: [...state][itemIndex].id, amount: parseInt(action.payload.amount) };
       return [
         ...state.slice(0, itemIndex), item, ...state.slice(itemIndex + 1)
       ]
-    case "REMOVE_FROM_CART":
+    case actionNames.REMOVE_FROM_CART:
       const newState = [...state].filter(product => product.id !== action.payload.id);
-      return newState
+      return newState;
+    case actionNames.CLEAR_CART:
+      return [];
     default:
       return state;
   }

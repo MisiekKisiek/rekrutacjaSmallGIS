@@ -1,40 +1,109 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faTruck } from '@fortawesome/free-solid-svg-icons';
 
 //Redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, batch } from 'react-redux';
 import { changeCartVisibility } from '../store/cartVisibility/cartVisiblity.action';
+import { changePromoPercent, changePromoCodeCorrect } from '../store/price/price.action';
+import { clearCart } from '../store/cart/cart.action';
 
 //Components
 import CartItem from './CartItem';
 
 const CartComponent = () => {
 
+  const correctValues = {
+    neutral: "",
+    correct: "correct",
+    uncorrect: "uncorrect"
+  }
+
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(changePromoCodeCorrect(""));
+      dispatch(changePromoPercent(0));
+    };
+  }, []);
+
+  const [promoCodeInput, setpromoCodeInput] = useState("");
+  const [sendingOrder, setsendingOrder] = useState(false);
+  const [orderSucced, setorderSucced] = useState(false);
 
   const cart = useSelector(state => state.cart);
   const products = useSelector(state => state.products);
+  const price = useSelector(state => state.price);
+  const { promoPercent, promoCodeCorrect } = price;
 
-  const [promoCodeCorrect, setpromoCodeCorrect] = useState(true);
-
-  const renderCartItems = cart.map(item => <CartItem key={item.id} item={item} />);
-
-  const sumPrice = cart.reduce((prev, curr) => {
+  const sumPrice = (cart.reduce((prev, curr) => {
     const product = products.find(e => curr.id === e.id);
     return (prev + product.price * curr.amount)
-  }, 0).toFixed(2);
+  }, 0) * (1 - promoPercent / 100)).toFixed(2);
+
+  const dispatchPromo = (correct, numbers) => {
+    batch(() => {
+      dispatch(changePromoCodeCorrect(correct));
+      dispatch(changePromoPercent(numbers));
+    })
+  }
 
   const handlePromoInput = (e) => {
-    const rule = /(\\d+)/
-    const numbersAmount = e.target.value.match(rule);
-    console.log(numbersAmount)
+    const rule = /\D+/;
+    setpromoCodeInput(e.target.value);
+    let inputNumbers = e.target.value;
+    while (inputNumbers.match(rule) !== null) {
+      const trueVal = inputNumbers.match(rule);
+      inputNumbers = inputNumbers.replace(trueVal[0], "")
+    }
     if (e.target.value === "") {
-      setpromoCodeCorrect(undefined)
-    } else if (e.target.value.length < 2) {
-      setpromoCodeCorrect(false)
+      dispatchPromo(correctValues.neutral, 0)
+    } else if (inputNumbers.length < 2 || inputNumbers.length > 8) {
+      dispatchPromo(correctValues.uncorrect, 0)
     } else {
-      setpromoCodeCorrect(true)
+      dispatchPromo(correctValues.correct, inputNumbers.length)
+    }
+  };
+
+  const promoCodeTitle = () => {
+    if (promoCodeCorrect === correctValues.uncorrect) {
+      return (<span className={correctValues.uncorrect}>Błędny kod promocyjny</span>)
+    } else if (promoCodeCorrect === correctValues.correct) {
+      return (<span className={correctValues.correct}>Rabat {promoPercent}% został naliczony</span>)
+    } else {
+      return (<span>Wprowadź kod promocyjny</span>)
+    }
+  };
+
+  const renderCartItems = (cartItems) => {
+    if (orderSucced) {
+      return <li>
+        <span className="cart__bag-ordered">
+          Twoje zamówienie zostało złożone
+          <FontAwesomeIcon icon={faTruck} />
+        </span>
+      </li>
+    } else if (cartItems.length === 0) {
+      return <li>
+        <span className="cart__bag-empty">Twój koszyk jest pusty</span>
+      </li>
+    }
+    else {
+      return cart.map(item => <CartItem key={item.id} item={item} />)
+    }
+  }
+
+  const handleSendOrder = () => {
+    if (cart.length > 0) {
+      setsendingOrder(true);
+      setTimeout(() => {
+        setsendingOrder(false);
+        setpromoCodeInput("");
+        setorderSucced(true);
+        dispatch(clearCart());
+        dispatchPromo(correctValues.neutral, 0);
+      }, 3000);
     }
   }
 
@@ -50,13 +119,19 @@ const CartComponent = () => {
         <button onClick={() => { dispatch(changeCartVisibility()) }}><FontAwesomeIcon icon={faTimes} /></button>
       </div>
       <ul className="cart__bag-list">
-        {renderCartItems}
+        {renderCartItems(cart)}
       </ul>
       <div className="cart__bag-resume">
         <div className="cart__bag-resume-money">
           <div className="cart__bag-resume-promo">
-            <span>Kod promocyjny</span>
-            <input type="text" maxLength="15" className={`${promoCodeCorrect ? "correct" : "uncorrect"}`} onChange={handlePromoInput} />
+            {promoCodeTitle()}
+            <input
+              type="text"
+              maxLength="15"
+              className={`${promoCodeCorrect}`}
+              onChange={handlePromoInput}
+              value={promoCodeInput}
+            />
           </div>
           <div className="cart__bag-resume-sum">
             <span className="cart__bag-resume-sum-title">SUMA:</span>
@@ -66,7 +141,9 @@ const CartComponent = () => {
         </div>
         <div className="cart__bag-resume-buy">
           <button onClick={() => { dispatch(changeCartVisibility()) }}>wróć</button>
-          <button>opłać</button>
+          <button onClick={handleSendOrder}>
+            {sendingOrder ? <span className="loading"></span> : "opłać"}
+          </button>
         </div>
       </div>
     </div>

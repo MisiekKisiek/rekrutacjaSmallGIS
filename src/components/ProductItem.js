@@ -5,7 +5,6 @@ import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 //Redux
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cart/cart.action'
-import cartVisibility from '../store/cartVisibility/cartVisibility.reducer';
 
 const ProductItem = ({ data }) => {
 
@@ -28,7 +27,7 @@ const ProductItem = ({ data }) => {
           {name}
         </h2>
         <span className="product__item-price">
-          {price} zł
+          {price.toFixed(2)} zł
         </span>
       </div>
       <div className="product__item-desc">

@@ -8,7 +8,7 @@ export const addToCart = (id) => ({
 });
 
 export const changeCartItemAmount = (id, amount) => ({
-  type: "CHANGE_CART_ITEM_AMOUNT",
+  type: actionNames.CHANGE_CART_ITEM_AMOUNT,
   payload: {
     id,
     amount,
@@ -16,8 +16,12 @@ export const changeCartItemAmount = (id, amount) => ({
 });
 
 export const removeFromCart = (id) => ({
-  type: "REMOVE_FROM_CART",
+  type: actionNames.REMOVE_FROM_CART,
   payload: {
     id,
   }
+});
+
+export const clearCart = () => ({
+  type: actionNames.CLEAR_CART
 })

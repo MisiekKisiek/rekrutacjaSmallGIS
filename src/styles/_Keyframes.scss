@@ -15,3 +15,8 @@
     right: 0;
   }
 }
+
+@keyframes loadingAnimation{
+  0%{transform: translate(-50%,-50%) scale(.5);}
+  100%{transform: translate(-50%,-50%) scale(1.3);}
+}

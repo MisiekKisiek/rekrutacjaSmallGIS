@@ -36,7 +36,7 @@ const CartItem = ({ item }) => {
       <h2 className="cart__bag-item-name">{correctName}</h2>
     </div>
     <div className="cart__bag-item-sum">
-      <span className="cart__bag-item-price">{price}</span>
+      <span className="cart__bag-item-price">{`${price.toFixed(2)} zł`}</span>
       <div className="cart__bag-item-det">
         <span>szt.</span>
         <input

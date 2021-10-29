@@ -70,6 +70,22 @@
 
 .cart__bag-list{
   list-style-type: none;
+  text-align: center;
+  span{
+    font-family: 'Rubik', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: $color3;
+  }
+  .cart__bag-ordered{
+    color: $color2;
+    width: 0%;
+    animation: orderedAnimation 3s forwards;
+    svg{
+      // position: relative;
+      margin-left: 5px
+    }
+  }
 }
 
 .cart__bag-item{
@@ -101,7 +117,7 @@
   }
 
   .cart__bag-item-info{
-    flex-basis: 40%;
+    flex-basis: 35%;
     .cart__bag-item-name{
       display: inline-block;
       margin: 20px 0 5px 0;
@@ -113,13 +129,11 @@
   }
 
   .cart__bag-item-sum{
-    @include flex-mother($flex-direction: column, $align-items:flex-end);
+    @include flex-mother($flex-direction: column, $align-items:flex-end, $justify-content: space-between);
     flex-grow: 1;
     position: relative;
-    margin: 0 10px 0 0;
-
+    margin: 20px 10px 20px 0;
     .cart__bag-item-price{
-      margin-top: 20px;
       font-size: 14px;
       font-family: 'Rubik', sans-serif;
       font-weight: 500;
@@ -129,7 +143,6 @@
 
   .cart__bag-item-det{
     @include flex-mother($align-items: center);
-    margin-top: 15px;
     span{
       font-size: 11px;
     }
@@ -166,6 +179,7 @@
       span{
         font-size: 11px;
         font-weight: bold;
+        white-space: nowrap;
         &.correct{
           color: $color2;
         }
@@ -220,6 +234,7 @@
       cursor: pointer;
     }
     button:nth-of-type(2){
+      position: relative;
       height: 40px;
       line-height: 18px;
       width: 105px;
@@ -233,6 +248,46 @@
       color: white;
       transition: .3s;
       cursor: pointer;
+      .loading{
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background-color: $color1;
+        opacity: .8;
+        animation: loadingAnimation infinite .5s alternate-reverse;
+      }
+      
+      .loading::after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 80%;
+        height: 80%;
+        border-radius: 50%;
+        background-color: $color4;
+        animation: loadingAnimation infinite .5s alternate-reverse;
+      }
+      .loading::before{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 60%;
+        height: 60%;
+        border-radius: 50%;
+        background-color: $color2;
+        opacity: .6;
+        animation: loadingAnimation infinite .5s alternate-reverse;
+        z-index: 99;
+      }
     }
   }
 }
