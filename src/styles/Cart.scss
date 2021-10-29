@@ -80,11 +80,6 @@
   .cart__bag-ordered{
     color: $color2;
     width: 0%;
-    animation: orderedAnimation 3s forwards;
-    svg{
-      // position: relative;
-      margin-left: 5px
-    }
   }
 }
 
